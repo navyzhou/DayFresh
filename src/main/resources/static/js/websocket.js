@@ -5,7 +5,7 @@ function openWebSocket(usid) {
 		return;
 	}
 	
-	socket = new WebSocket("ws://192.168.0.161:8080/DayFresh/websocket/" + usid);
+	socket = new WebSocket("ws://127.0.0.1:8888/websocket/" + usid);
 	
 	socket.onopen = function() {
 		console.info("Socket已连接...");

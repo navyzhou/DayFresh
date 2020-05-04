@@ -74,7 +74,7 @@ $(function(){
 			$("#currentAdminId").val(data.aid);
 			$("#login_name").text(data.aname);
 			// 校验该用户有没有在其它地方登陆
-			// openWebSocket(data.aid);
+			openWebSocket(data.aid);
 		}
 	}, "json")
 	
