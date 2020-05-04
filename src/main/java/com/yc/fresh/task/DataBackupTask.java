@@ -30,7 +30,7 @@ public class DataBackupTask {
 	private String path; // 备份文件保存路径
 
 	// 每天凌晨2点出发数据库备份，需要将mysql的bin目录配置到环境变量path中，以便调用mysqldump指令
-	@Scheduled(cron="0 2 23 * * ?")
+	@Scheduled(cron="0 0 2 * * ?")
 	public void run(){
 		File fl = new File(path);
 		if (!fl.exists()) {
