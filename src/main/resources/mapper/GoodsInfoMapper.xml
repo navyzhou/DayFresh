@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yc.fresh.mapper.IGoodsInfoMapper">
+	<insert id="add" parameterType="GoodsInfo">
+		insert into goodsinfo values(0, #{gname}, #{tno}, #{price}, #{intro}, #{balance}, #{pics}, #{unit}, #{qperied}, #{weight}, #{descr})
+	</insert>
+	
+	<select id="finds" resultType="GoodsInfo">
+		select gno, gname, price, pics, tno from goodsinfo gf1 where 4 > 
+			(select count(gno) from goodsinfo gf2 where gf1.tno = gf2.tno and gf1.gno &lt; gf2.gno) order by gf1.tno asc, gf1.gno desc
+	</select>
+	
+	<select id="findByType" parameterType="map" resultType="GoodsInfo">
+		select gno, gname, price, unit, weight, pics from goodsinfo gf where tno=#{tno} order by 
+			(select count(gno) from orderItemInfo of where of.gno=gf.gno) desc, gno desc limit #{page}, #{rows}
+	</select>
+	
+	<select id="findByGno" parameterType="int" resultType="GoodsInfo">
+		select gno, gname, gf.tno, price, intro, balance, pics, unit, weight, qperied, descr, tname from goodsinfo gf,
+		goodstype gt where gf.tno = gt.tno and gno = #{_parameter}
+	</select>
+	
+	<select id="getTotal" parameterType="string" resultType="int">
+		select count(gno) from goodsinfo
+		<where>
+			<if test="_parameter != null and _parameter !=''">
+				tno = #{_parameter}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateStore">
+		update goodsinfo set
+		<trim prefix=" balance=balance-case" suffix="end">
+			<foreach collection="array" item="item">
+				when gno=(select gno from cartinfo where cno=#{item}) then (select num from cartinfo where cno=#{item})
+			</foreach>
+		</trim>
+		<where>
+			gno in(select gno from cartinfo where cno in
+			<foreach collection="array" item="item" open="(" separator="," close=")">
+			#{item}
+			</foreach>
+			)
+		</where>
+	</update>
+</mapper>

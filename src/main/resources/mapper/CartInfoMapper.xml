@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yc.fresh.mapper.ICartInfoMapper">
+	<insert id="add" parameterType="CartInfo">
+		insert into cartinfo values(#{cno}, #{mno}, #{gno}, #{num})
+	</insert>
+	
+	<select id="findByMno" parameterType="int" resultType="CartInfo">
+		select cno, gno, num from cartinfo where mno=#{_parameter} 
+	</select>
+	
+	<select id="finds" parameterType="int" resultType="CartInfo">
+		select cno, cf.gno, num, pics, price, gname, unit, weight from cartinfo cf, goodsinfo gf where cf.gno=gf.gno and mno=#{_parameter} 
+	</select>
+	
+	<select id="findByCnos" resultType="CartInfo">
+		select cno, cf.gno, num, pics, price, gname, unit, weight from cartinfo cf, goodsinfo gf where cf.gno=gf.gno and cno in
+		<foreach collection="array" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach> 
+	</select>
+	
+	<delete id="delete">
+		delete from cartinfo where cno in
+		<foreach collection="array" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach> 
+	</delete>
+	
+	<delete id="deleteByCno" parameterType="string">
+		delete from cartinfo where cno=#{_parameter}
+	</delete>
+	
+	<update id="update" parameterType="CartInfo">
+		update cartinfo set num = num + #{num} where cno = #{cno}
+	</update>
+	
+	<update id="updates" parameterType="CartInfo">
+		update cartinfo set num = num + #{num} where mno = #{mno} and gno=#{gno}
+	</update>
+	
+	<update id="updateByMnoAndGno" parameterType="CartInfo">
+		update cartinfo set num = num + #{num} where gno=#{gno} and mno=#{mno}
+	</update>
+</mapper>

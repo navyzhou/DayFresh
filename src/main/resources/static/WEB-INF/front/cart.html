@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>天天生鲜-购物车</title>
+<link rel="shortcut icon" href="../images/copylogo.png">
+<link rel="stylesheet" href="../css/reset.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/cart.css">
+</head>
+
+<body>
+	<!-- 头部 -->
+	<div class="header_con">
+    	<div class="header">
+    		<div class="welcome fl">欢迎来到天天生鲜</div>
+            <div class="fr" id="head_info">
+            	
+            </div>
+    	</div>
+    </div>
+
+	<!-- 搜索框-->
+	<div class="search_bar clearfix">
+    	<a href="../index.html" class="logo fl"><img src="../images/logo.png"></a>
+    	<div class="search_con fl">
+        	<form>
+            	<input type="text" placeholder="搜索商品" class="input_text fl" name="key_words">
+                <input type="button" value="搜索" class="input_btn fr">
+            </form>
+        </div>
+    	<div class="guest_cart fr">
+        	<a href="" class="cart_name fl">我的购物车</a>
+            <div class="goods_count fl" id="show_count">1</div>
+        </div>
+    </div>
+    
+    <!-- 购物车 -->
+    <div class="cart_con">
+    	<h2 class="total_count">全部商品<em>1</em>件</h2>
+    	<div class="cart_list_th clearfix">
+        	<ul>
+            	<li class="col01">商品名称</li>
+            	<li class="col02">商品单位</li>
+                <li class="col03">商品价格(元)</li>
+                <li class="col04">数量</li>
+                <li class="col05">小计</li>
+                <li class="col06">操作</li>
+            </ul>
+        </div>
+    	<div class="cart_list_td clearfix" id="cart_list">
+           
+           <!--  <ul>
+        		<li class="col01"><input type="checkbox" checked ></li>
+            	<li class="col02"><img src="../images/goods/goods003.jpg"></li>
+                <li class="col03">牛奶草莓<br><em>16.80元/500g</em></li>
+                <li class="col04">500g</li>
+                <li class="col05">16.80</li>
+                <li class="col06">
+                	<div class="num_add">
+                    	<a href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a>
+                        <input type="text" value="1" class="num_show fl">
+                        <a href="javascript:void(0)" onclick="add(this)" class="add fl">+</a>
+                    </div>
+                </li>
+                <li class="col07">16.80</li>
+                <li class="col08"><a href="javascript:;" onclick="delGoods(this)">删除</a></li>
+            </ul> -->
+        </div>
+    	<div class="setElements">
+        	<ul>
+            	<li class="col01"><input type="checkbox" checked id="all"></li>
+            	<li class="col02"><label for="all">全选</label></li>
+                <li class="col03">合计(不含运费)：<span>￥</span><em id="totalPrices"></em><br>共计<b id="totalNumbers"></b>件商品</li>
+                <li class="col04"><a href="javascript:gotoPay()">去结算</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 版权所有 -->
+	<div class="footer">
+    	<div class="foot_link">
+    		<a href="#">关于我们</a> <span> | </span>
+            <a href="#">联系我么</a> <span> | </span>
+            <a href="#">招聘人才</a> <span> | </span>
+            <a href="#">友情链接</a> 
+    	</div>
+    	<p>CcpyRight &copy; 2019 衡阳市源辰信息科技有限公司 All Rights Reserverd</p>
+        <p>电话：0734-8355998 湘ICP备16015987号</p>
+    </div>
+    
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/car.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.post("../cart/finds", null, function(data) {
+		$("#show_count").text(data.length);
+		
+		var str = "";
+		$.each(data, function(index, item) {
+			str += '<ul><li class="col01"><input type="checkbox" value="'+item.cno+'" checked></li>';
+			str += '<li class="col02"><img src="../../'+item.pics.split(";")[0]+'"></li>';
+			str += '<li class="col03">'+item.gname+'<br><em>'+item.weight+'/'+item.unit+'</em></li> <li class="col04">'+item.weight+'</li>';
+			str += '<li class="col05">'+item.price+'</li><li class="col06"><div class="num_add">';
+			str += '<a href="javascript:void(0)" onclick="lost(this,\''+item.cno+'\')" class="minus fl">-</a>';
+			str += ' <input type="text" value="'+item.num+'" class="num_show fl">';
+			str += '<a href="javascript:void(0)" onclick="add(this,\''+item.cno+'\')" class="add fl">+</a></div></li>';
+			str += '<li class="col07">&yen;'+ (item.num*item.price).toFixed(2) +'</li>';
+        	str += '<li class="col08"><a href="javascript:void(0);" onclick="delGoods(this,\''+item.cno+'\')">删除</a></li></ul>';
+		})
+		$("#cart_list").append($(str));
+		
+		productCount();
+		
+		var checkboxs = $("#cart_list input[type='checkbox']");
+		var len = checkboxs.length;
+		for (var i = 0; i < len; i++) {
+			checkboxs[i].onclick = function() {
+				productCount();
+				
+				for (var j = 0; j < len; j++) {
+					if (!checkboxs[j].checked) {
+						$("#all").prop("checked", false);
+						return;
+					}
+				}
+				$("#all").prop("checked", true);
+			}
+		}
+	}, "json");
+})
+
+function gotoPay() {
+	var str = [];
+	$("#cart_list input[type='checkbox']").each(function(){
+		if ($(this).prop("checked")) {
+			str[str.length] = $(this).val();
+		}
+	})
+	
+	if (str.length <= 0) {
+		return;
+	}
+	
+	location.href="order.html#" + str.join(",");
+}
+</script>
+</body>
+</html>

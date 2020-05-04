@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yc.fresh.mapper.IAddrInfoMapper">
+	<insert id="add" parameterType="AddrInfo">
+		insert into addrinfo values(#{ano}, #{mno}, #{name}, #{tel}, #{province}, #{city}, #{area}, #{addr}, 0, 1)
+	</insert>
+	
+	<update id="update" parameterType="string">
+		update addrinfo set flag = 1 where ano = #{_parameter}
+	</update>
+	
+	<update id="updates">
+		update addrinfo set flag = (flag + 1) % 2 where ano in
+		<foreach collection="array" separator="," open="(" close=")" item="item">
+		#{item}
+		</foreach>
+	</update>
+	
+	<select id="findByMno" parameterType="int" resultType="AddrInfo">
+		select ano, mno, name, tel, province, city, area, addr, flag from addrinfo where status=1 and mno=#{_parameter}
+	</select>
+</mapper>

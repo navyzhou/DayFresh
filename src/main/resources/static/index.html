@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>天天生鲜-首页</title>
+<link rel="short icon" href="images/copylogo.png">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/foot.css">
+</head>
+
+<body>
+	<!-- 头部  -->
+	<div class="header_con">
+    	<div class="header">
+    		<div class="welcome fl">欢迎来到天天生鲜</div>
+    		<div class="fr" id="head_info">
+            	
+             </div>  
+    	</div>
+    </div>
+    
+     <!-- 搜素框 -->
+     <div class="search_bar clearfix">
+     		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+     		<div class="search_con fl">
+            	<form>
+                    <input type="text" class="input_text fl" name="key_words" placeholder="搜索商品">
+                    <input type="submit" class="input_btn fr"  value="搜索">
+                </form>
+            </div>
+     		<div class="guest_cart fr">
+            	<a href="cart.html" class="cart_name fl">我的购物车</a>
+                <div class="goods_count fl" id="show_count">1</div>
+            </div>
+     </div>
+
+    <!-- 商品分类 -->
+    <div class="navbar_con">
+    	<div class="navbar">
+    		<h1 class="fl">全商品分类</h1>
+    		<ul class="navlist fl">
+    			<li><a href="">首页</a></li>
+                <li class="interval">|</li>
+                <li><a href="">手机生鲜</a></li>
+                <li class="interval">|</li>
+                <li><a href="">抽奖</a></li>
+    		</ul>
+    	</div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <div class="center_con clearfix">
+        <div class="subnav fl">
+            <ul>
+                <li><a href="#model01" class="fruit">新鲜水果</a></li>
+                <li><a href="#model02" class="seafood">海鲜水产</a></li>
+                <li><a href="#model03" class="meet">猪牛羊肉</a></li>
+                <li><a href="#model04" class="egg">禽类蛋品</a></li>
+                <li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
+                <li><a href="#model06" class="ice">速冻食品</a></li>
+            </ul>
+        </div>
+        <div class="slide fl">
+            <ul class="slide_pics">
+                <li><a href="" class=""><img src="images/slide.jpg" alt="幻灯片"></a></li>
+                <li><a href="" class=""><img src="images/slide02.jpg" alt="幻灯片"></a></li>
+                <li><a href="" class=""><img src="images/slide03.jpg" alt="幻灯片"></a></li>
+                <li><a href="" class=""><img src="images/slide04.jpg" alt="幻灯片"></a></li>
+            </ul>
+            <div class="prev"></div>
+            <div class="next"></div>
+            <ul class="points"></ul>
+        </div>
+        <div class="adv fl">
+            <a href=""><img src="images/adv01.jpg" alt="清凉一夏"></a>
+            <a href=""><img src="images/adv02.jpg" alt="盛夏尝鲜"></a>
+        </div>
+    </div>
+    
+    <!-- 商品展示 -->
+    <div id="list_goods">
+    
+    </div>
+    
+    <!--  
+    <div class="list_model">
+    	<div class="list_title clearfix">
+        	<h3 class="fl" id="model01">新鲜水果</h3>
+        	<div class="subtitle fl">
+            	<span>|</span>
+                <a href="">鲜芒</a>
+                <a href="">加州提子</a>
+                <a href="">亚马逊牛油果</a>
+            </div>
+            <a href="#" class="goods_more fr" id="fruit_more">查看更多</a>
+        </div>
+    
+    	<div class="goods_con clearfix">
+        	<div class="goods_banner fl"><img src="images/banner01.jpg"></div>
+        	<ul class="goods_list fl">
+            	<li>
+                	<h4><a href="details.html">草莓</a></h4>
+                    <a href="details.html"><img src="images/goods/goods003.jpg"></a>
+                	<div class="prize">￥ 30.00</div>
+                </li>
+                <li>
+                	<h4><a href="#">葡萄</a></h4>
+                    <a href="#"><img src="images/goods/goods002.jpg"></a>
+                	<div class="prize">￥ 30.00</div>
+                </li>
+				<li>
+                	<h4><a href="#">柠檬</a></h4>
+                    <a href="#"><img src="images/goods/goods001.jpg"></a>
+                	<div class="prize">￥ 30.00</div>
+                </li>
+				<li>
+                	<h4><a href="#">牛油果</a></h4>
+                    <a href="#"><img src="images/goods/goods004.jpg"></a>
+                	<div class="prize">￥ 30.00</div>
+                </li>
+        	</ul>
+        </div>
+    </div>
+	-->
+    <!-- 版权所有 -->
+    <div class="footer">
+    	<div class="foot_link">
+        	<a href="#">关于我们</a> <span> | </span>
+            <a href="#">联系我们</a> <span> | </span>
+            <a href="#">招聘广告</a> <span> | </span>
+            <a href="#">友情链接</a>
+        </div>
+    	<p>CopyRight &copy; 2019 衡阳市源辰信息科技有限公司 All Rights Reserverd</p>
+        <p>电话：0734-8355998 湘ICP备16015987号-1</p>
+    </div>
+    
+<!--  注意引入顺序 -->
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/slide.js"></script>
+<script src="js/basic.js"></script>
+<script>	
+$(function(){
+	$.get("goods/finds", null, function(data){
+		var str = "";
+		
+		$.each(data.types, function(index, item) {
+			var gnameStr = "";
+			var goodsStr = "";
+			var tno = item.tno;
+			
+			$.each(data.goods, function(idx, itm) {
+				if (tno == itm.tno) {
+					gnameStr += '<a target="_blank" href="details.html#'+itm.gno+'">'+itm.gname+'</a>';
+					goodsStr += '<li><h4><a target="_blank" href="details.html#'+itm.gno+'">'+itm.gname+'</a></h4><a target="_blank" href="details.html#'+itm.gno+'"><img src="../'+itm.pics.split(";")[0]+'"></a>';
+					goodsStr += '<div class="prize">&yen;'+itm.price+'</div></li>';
+				}
+			})
+			
+			str += '<div class="list_model"><div class="list_title clearfix"><h3 class="fl" id="model01">'+item.tname+'</h3>';
+			str += '<div class="subtitle fl"><span>|</span>' + gnameStr + '</div>';
+			str += '<a href="goods.html#'+item.tno+'&'+ item.tname + '" class="goods_more fr" id="fruit_more" target="_blank">查看更多</a></div>';
+			str += '<div class="goods_con clearfix"><div class="goods_banner fl"><img src="../'+item.pic+'"></div><ul class="goods_list fl">';
+			str += goodsStr + '</ul></div></div>';
+		})
+		
+		$("#list_goods").append($(str));
+	}, "json");
+})
+</script>
+</body>
+</html>

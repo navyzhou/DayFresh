@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>天天生鲜-商品详情</title>
+<link rel="short icon" href="images/copylogo.png">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/details.css">
+</head>
+
+<body>
+	<!-- 头部  -->
+	<div class="header_con">
+    	<div class="header">
+    		<div class="welcome fl">欢迎来到天天生鲜</div>
+    		<div class="fr" id="head_info">
+            	
+             </div>  
+    	</div>
+    </div>
+    
+     <!-- 搜素框 -->
+     <div class="search_bar clearfix">
+        <a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+        <div class="search_con fl">
+            <input type="text" placeholder="搜素商品" name="" class="input_text fl">
+            <input type="button" value="搜索" class="input_btn fr">
+        </div>
+        <div class="guest_cart fr">
+            <a href="cart.html" class="cart_name fl">我的购物车</a>
+            <div class="goods_count fl" id="show_count">1</div>
+        </div>
+     </div>
+     
+    <!-- 全部商品分类 --> 
+    <div class="navbar_con">
+    	<div class="navbar clearfix">
+        	<!-- 动态下拉框 -->
+    		<div class="subnav_con fl">
+            	<h1 class="fl">全商品分类</h1>
+            	<span></span>
+                <ul class="subnav">
+                    <li><a href="#model01" class="fruit">新鲜水果</a></li>
+                    <li><a href="#" class="sealfood">海鲜水产</a></li>
+                    <li><a href="#" class="meet">猪牛羊肉</a></li>
+                    <li><a href="#" class="egg">禽类蛋品</a></li>
+                    <li><a href="#" class="vegetables">新鲜蔬菜</a></li>
+                    <li><a href="#" class="ice">速冻食品</a></li>
+            	</ul>
+            </div>
+    		<ul class="navlist fl">
+    			<li><a href="index.html">首页</a></li>
+                <li class="interval">|</li>
+                <li><a href="">手机生鲜</a></li>
+                <li class="interval">|</li>
+                <li><a href="">抽奖</a></li>
+    		</ul>
+    	</div>
+    </div>
+     
+    <!-- 面包屑导航 --> 
+    <div class="breadcrumb" id="breadcrumb">
+     	<a href="javascript:void(0)">全部分类</a>
+        <span>&gt;</span>
+        <a href="javascript:void(0)" id="type_name">新鲜水果</a>
+        <span>&gt;</span>
+        <a href="javascript:void(0)">商品详情</a>
+     </div>
+     
+    <!-- 商品展示 -->
+    <div class="goods_details_con clearfix">
+    	<div class="goods_details_pic fl" id="goods_pics">
+    		
+    	</div>
+    	<div class="goods_details_list fr" id="goods_info">
+        	
+        </div>
+    </div>
+    
+    <!-- 商品详情 -->
+    <div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					<li>
+						<a href="#"><img src="images/goods/goods001.jpg"></a>
+						<h4><a href="#">进口柠檬</a></h4>
+						<div class="prize">￥3.90</div>
+					</li>
+					<li>
+						<a href="#"><img src="images/goods/goods002.jpg"></a>
+						<h4><a href="#">玫瑰香葡萄</a></h4>
+						<div class="prize">￥16.80</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+				<li>评论</li>
+                <li>推荐</li>
+			</ul>
+
+			<div class="tab_content">
+				<dl>
+					<dt>商品详情：</dt>
+					<dd id="goods_detail"> </dd>
+				</dl>
+			</div>
+
+		</div>
+	</div>
+    
+    <!-- 版权所有 -->
+    <div class="footer">
+    	<div class="foot_link">
+        	<a href="#">关于我们</a> <span> | </span>
+            <a href="#">联系我们</a> <span> | </span>
+            <a href="#">招聘广告</a> <span> | </span>
+            <a href="#">友情链接</a>
+        </div>
+    	<p>CopyRight &copy; 2019 衡阳市源辰信息科技有限公司 All Rights Reserverd</p>
+        <p>电话：0734-8355998 湘ICP备16015987号</p>
+    </div>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/basic.js"></script>
+<script>
+$(function() {
+	var hash = location.hash.replace("#","") 
+	if (hash == "") {
+		location.href="index.html";
+	} else {
+		$.post("goods/detail", {gno:hash}, function(data){
+			$("#type_name").text(data.tname);
+			var pics = "";
+			var temp = data.pics.split(";");
+			for (var i in temp) {
+				pics += '<img src="../'+temp[i]+'">';
+			}
+			$("#goods_pics").append($(pics))
+			
+			var str = "<h3>"+data.gname+"</h3><p>" + data.intro +'</p><div class="price_bar">';
+			str += '<span class="show_price">&yen;<em>'+data.price+'</em>元</span><span class="show_unit">单位：<em>'+data.unit+'</em></span>';
+			str += '</div><div class="goods_num clearfix"><div class="num_name fl">数量：</div><div class="num_add fl">';
+        	str += '<input type="text" class="num_show fl" value="1"><a href="javascript:;" class="add fr">+</a>';
+        	str += '<a href="javascript:;" class="minus fr">-</a>';
+        	str += '</div></div><div class="total">总价：<em>'+data.price+'</em>元</div><div class="operate_btn">';
+            str += '<a target="_blank" href="front/order.html" class="buy_btn" id="buy_btn">立即购买</a>';
+            str += '<a target="_blank"  href="front/order.html" class="add_cart" id="add_cart">加入购物车</a></div>';
+            $("#goods_info").append($(str));
+            $("#goods_detail").append($(data.descr));
+            
+            showPics();
+		}, "json");
+	}
+}) 
+
+
+function showPics() {
+	var imglen = $("#goods_pics>img").length;
+	if (imglen > 1) {
+		var i = 0;
+		setInterval(function(){
+			$("#goods_pics>img").css("display", "none");
+			$("#goods_pics>img:eq("+(i)+")").css("display", "block");
+			i = (i + 1) % imglen;
+		}, 2000);
+	}
+}
+</script>
+</body>
+</html>

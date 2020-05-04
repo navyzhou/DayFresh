@@ -1,0 +1,1 @@
+java -jar DayFresh.jar --spring.profiles.active=dev

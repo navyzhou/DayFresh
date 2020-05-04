@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yc.fresh.mapper.IOrderItemInfoMapper">
+	<insert id="add" parameterType="map">
+		insert into orderiteminfo select 0, #{ono}, cf.gno, num, price, 1 from cartinfo cf, goodsinfo gf where cf.gno=gf.gno and cno in
+		<foreach collection="cnos" open="(" separator="," close=")" item="item">
+		#{item}
+		</foreach>
+	</insert>
+</mapper>

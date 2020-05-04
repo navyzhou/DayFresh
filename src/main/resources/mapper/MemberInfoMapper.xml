@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yc.fresh.mapper.IMemberInfoMapper">
+	<insert id="add" parameterType="MemberInfo">
+		insert into memberInfo values(0, #{nickName}, '', md5(#{pwd}), #{tel}, #{email}, '', now(), 1)
+	</insert>
+	
+	<select id="login" parameterType="MemberInfo" resultType="MemberInfo">
+		select mno, nickName, realName, tel, email, photo, date_format(regDate, '%Y-%m-%d %H:%i:%s') regDate from memberInfo 
+		where (nickName=#{nickName} or tel=#{nickName} or email=#{nickName}) and pwd=md5(#{pwd})
+	</select>
+</mapper>
