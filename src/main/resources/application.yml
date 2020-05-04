@@ -1,0 +1,41 @@
+spring:
+   mail:
+      protocol: smtp
+      password: dihpepdwtahlgefh
+      port: 465
+      host: smtp.qq.com
+      properties:
+         mail:
+           smtp:
+             auth: true
+             ssl:
+               enable: true
+      username: 1293580602@qq.com
+
+   datasource:
+      password: a
+      driverClassName: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://127.0.0.1:3306/fresh?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+      username: root
+      dbName: fresh
+      backupPath: D:\\backup
+   http:
+      encoding:
+         charset: utf-8
+         force: true
+         enabled: true
+   redis:
+      database: 0
+      port: 6379
+      host: 127.0.0.1
+      
+server:
+   tomcat:
+      max-http-header-size: 8192
+      uri-encoding: utf-8
+   port: 8888
+   
+mybatis:
+   mapper-locations: classpath:mapper/*Mapper.xml
+   type-aliases-package: com.yc.fresh.entity

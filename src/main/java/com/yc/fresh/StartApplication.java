@@ -13,15 +13,3 @@ public class StartApplication{
 		SpringApplication.run(StartApplication.class, args);
 	}
 } 
-
-//@SpringBootApplication(scanBasePackages = "com.yc.fresh.*")
-/*public class StartApplication extends SpringBootServletInitializer{
-	public static void main(String[] args) {
-		SpringApplication.run(StartApplication.class, args);
-	}
-	
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(StartApplication.class);
-	}
-} */

@@ -14,7 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix="spring.mail")
 public class SendMailUtil {
 	@Value("${spring.mail.username}")
